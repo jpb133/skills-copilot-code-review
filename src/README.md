@@ -6,6 +6,8 @@ A super simple FastAPI application that allows students to view and sign up for 
 
 - View all available extracurricular activities
 - Sign up for activities
+- View active announcements
+- Manage announcements when signed in as a teacher/admin
 
 ## Getting Started
 
@@ -31,6 +33,14 @@ A super simple FastAPI application that allows students to view and sign up for 
 | ------ | ----------------------------------------------------------------- | ------------------------------------------------------------------- |
 | GET    | `/activities`                                                     | Get all activities with their details and current participant count |
 | POST   | `/activities/{activity_name}/signup?email=student@mergington.edu` | Sign up for an activity                                             |
+| POST   | `/activities/{activity_name}/unregister?email=student@mergington.edu` | Remove a student from an activity                                   |
+| POST   | `/auth/login?username={username}&password={password}`            | Sign in as a teacher or admin                                       |
+| GET    | `/auth/check-session?username={username}`                        | Validate a signed-in user                                           |
+| GET    | `/announcements`                                                 | Get active announcements for the banner                             |
+| GET    | `/announcements/manage?teacher_username={username}`              | List all announcements (auth required)                              |
+| POST   | `/announcements?teacher_username={username}`                     | Create announcement (auth required)                                 |
+| PUT    | `/announcements/{announcement_id}?teacher_username={username}`   | Update announcement (auth required)                                 |
+| DELETE | `/announcements/{announcement_id}?teacher_username={username}`   | Delete announcement (auth required)                                 |
 
 ## Data Model
 
@@ -47,4 +57,10 @@ The application uses a simple data model with meaningful identifiers:
    - Name
    - Grade level
 
-All data is stored in memory, which means data will be reset when the server restarts.
+3. **Announcements** - Uses generated MongoDB identifier:
+   - Title
+   - Message
+   - Optional start date
+   - Required expiration date
+
+All data is stored in MongoDB.
