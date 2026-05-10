@@ -587,9 +587,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const announcementId = announcementIdInput.value || null;
 
-    if (announcementId) {
-      payload.start_date = startDate;
-    } else if (startDate) {
+    if (announcementId || startDate) {
       payload.start_date = startDate;
     }
 
